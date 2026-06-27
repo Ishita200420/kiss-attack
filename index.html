@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiss Attack ❤️</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    overflow:hidden;
+    height:100vh;
+    background:linear-gradient(135deg,#ff758c,#ff7eb3,#ffc2d1);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial, Helvetica, sans-serif;
+    cursor:pointer;
+}
+
+h1{
+    color:white;
+    font-size:4rem;
+    text-align:center;
+    text-shadow:0 5px 15px rgba(0,0,0,.25);
+    z-index:10;
+    user-select:none;
+}
+
+.subtitle{
+    position:absolute;
+    top:60%;
+    color:white;
+    font-size:22px;
+    opacity:.9;
+}
+
+.heart-bg{
+    position:absolute;
+    font-size:30px;
+    animation:bgFloat linear infinite;
+    opacity:.25;
+}
+
+@keyframes bgFloat{
+
+    from{
+        transform:translateY(110vh);
+    }
+
+    to{
+        transform:translateY(-120vh);
+    }
+
+}
+
+.burst{
+
+    position:absolute;
+    pointer-events:none;
+    user-select:none;
+    animation:burst 1.5s forwards;
+
+}
+
+@keyframes burst{
+
+    0%{
+        transform:translate(0,0) scale(.4);
+        opacity:1;
+    }
+
+    100%{
+        transform:
+            translate(var(--x),var(--y))
+            rotate(720deg)
+            scale(2);
+        opacity:0;
+    }
+
+}
+
+.confetti{
+
+    position:absolute;
+    width:10px;
+    height:10px;
+    pointer-events:none;
+    animation:confetti 1.8s forwards;
+}
+
+@keyframes confetti{
+
+    0%{
+        transform:translate(0,0) rotate(0deg);
+        opacity:1;
+    }
+
+    100%{
+        transform:
+            translate(var(--x),var(--y))
+            rotate(720deg);
+        opacity:0;
+    }
+
+}
+
+.message{
+
+    position:absolute;
+    color:white;
+    font-size:34px;
+    font-weight:bold;
+    text-shadow:0 3px 10px rgba(0,0,0,.3);
+    animation:msg 1.5s forwards;
+    pointer-events:none;
+
+}
+
+@keyframes msg{
+
+    from{
+        transform:translateY(20px);
+        opacity:0;
+    }
+
+    20%{
+        opacity:1;
+    }
+
+    to{
+        transform:translateY(-80px);
+        opacity:0;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div>
+<h1>😘 Kiss Attack 😘</h1>
+<div class="subtitle">Click anywhere for unlimited kissies ❤️</div>
+</div>
+
+<script>
+
+// Background floating hearts
+
+for(let i=0;i<40;i++){
+
+    const heart=document.createElement("div");
+
+    heart.className="heart-bg";
+
+    heart.innerHTML=Math.random()>0.5?"❤️":"💕";
+
+    heart.style.left=Math.random()*100+"vw";
+
+    heart.style.fontSize=(20+Math.random()*40)+"px";
+
+    heart.style.animationDuration=(8+Math.random()*10)+"s";
+
+    heart.style.animationDelay=(-Math.random()*20)+"s";
+
+    document.body.appendChild(heart);
+
+}
+
+// Click effect
+
+document.addEventListener("click",(e)=>{
+
+    const emojis=["😘","💋","❤️","💕","🥰","😍"];
+
+    // Kiss Burst
+
+    for(let i=0;i<35;i++){
+
+        let kiss=document.createElement("div");
+
+        kiss.className="burst";
+
+        kiss.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
+
+        kiss.style.left=e.clientX+"px";
+
+        kiss.style.top=e.clientY+"px";
+
+        kiss.style.fontSize=(60+Math.random()*20)+"px";
+
+        const angle=Math.random()*360;
+
+        const distance=80+Math.random()*180;
+
+        kiss.style.setProperty("--x",
+            Math.cos(angle*Math.PI/180)*distance+"px");
+
+        kiss.style.setProperty("--y",
+            Math.sin(angle*Math.PI/180)*distance+"px");
+
+        document.body.appendChild(kiss);
+
+        setTimeout(()=>kiss.remove(),1500);
+
+    }
+
+    // Confetti
+
+    const colors=[
+        "#ff4d6d",
+        "#ff85a2",
+        "#ffd6e0",
+        "#ffffff",
+        "#ff99cc"
+    ];
+
+    for(let i=0;i<80;i++){
+
+        let c=document.createElement("div");
+
+        c.className="confetti";
+
+        c.style.left=e.clientX+"px";
+
+        c.style.top=e.clientY+"px";
+
+        c.style.background=
+            colors[Math.floor(Math.random()*colors.length)];
+
+        const angle=Math.random()*360;
+
+        const distance=120+Math.random()*220;
+
+        c.style.setProperty("--x",
+            Math.cos(angle*Math.PI/180)*distance+"px");
+
+        c.style.setProperty("--y",
+            Math.sin(angle*Math.PI/180)*distance+"px");
+
+        document.body.appendChild(c);
+
+        setTimeout(()=>c.remove(),1800);
+
+    }
+
+    // Floating message
+
+    const msgs=[
+        "Mwah! 😘",
+        "Love You ❤️",
+        "Another Kiss 💋",
+        "Unlimited Kissies 🥰",
+        "From Bubu ❤️"
+    ];
+
+    const msg=document.createElement("div");
+
+    msg.className="message";
+
+    msg.innerHTML=msgs[Math.floor(Math.random()*msgs.length)];
+
+    msg.style.left=(e.clientX-40)+"px";
+
+    msg.style.top=(e.clientY-20)+"px";
+
+    document.body.appendChild(msg);
+
+    setTimeout(()=>msg.remove(),1500);
+
+});
+
+</script>
+
+</body>
+</html>
